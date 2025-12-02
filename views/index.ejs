@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title> Class Recording Slot Booking</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f3f6fa;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    }
+
+    h3 {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #cfd7e3;
+      border-radius: 6px;
+      font-size: 14px;
+      margin-bottom: 15px;
+      outline: none;
+      background: #fafbff;
+    }
+
+    input:focus, select:focus {
+      border-color: #1d75d8;
+      background: #fff;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #1d75d8;
+      border: none;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0f5fb8;
+    }
+
+    .message-box {
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .error-box {
+      background: #ffe6e6;
+      border-left: 4px solid #ff4b4b;
+      color: #a30000;
+    }
+
+    .success-box {
+      background: #e6ffe9;
+      border-left: 4px solid #2ecc71;
+      color: #0a7a33;
+    }
+
+    .report-link {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .report-link a {
+      text-decoration: none;
+      color: #1d75d8;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .report-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Guidelines Box */
+    .guidelines {
+      background: #f7f9ff;
+      border: 1px solid #d8e4f7;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 25px;
+      font-size: 13px;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .guidelines h4 {
+      margin: 0 0 10px 0;
+      font-size: 15px;
+      color: #1d75d8;
+      font-weight: 700;
+    }
+
+    .guidelines ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .guidelines li {
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+
+<body>
+
+<%- include('partials/header') %>
+
+<div class="container">
+
+  <h3>Class Recording - Slot Booking Form</h3>
+
+  <% if (message) { %>
+    <div class="message-box <%= message.type === 'error' ? 'error-box' : 'success-box' %>">
+      <%= message.text %>
+    </div>
+  <% } %>
+
+  <form method="post" action="/book">
+
+    <label>Date</label>
+    <input type="date" name="date" id="dateField" required>
+
+    <label>Teacher Name</label>
+    <input type="text" name="teacher" required>
+
+    <label>Class Name(Venue)</label>
+    <input type="text" name="className" required>
+
+    <label>Mobile Number</label>
+    <input type="text" name="mobile" required>
+
+    <label>Subject</label>
+    <input type="text" name="subject" required>
+
+    <label>Period & Time</label>
+    <select name="period" required>
+      <% for (let p in periods) { %>
+        <option value="<%= p %>"><%= p %> — <%= periods[p] %></option>
+      <% } %>
+    </select>
+
+    <button type="submit">Book Slot</button>
+  </form>
+
+  <div class="report-link">
+    <a href="/report">View Date-wise Report</a>
+  </div>
+
+  <!-- Guidelines Section -->
+  <div class="guidelines">
+    <h4>Booking Instructions</h4>
+
+    <ul>
+      <li>Select the correct <b>Date</b>, <b>Period</b>, <b>Subject</b> and <b>Class/Venue</b>.</li>
+      <li>Ensure your <b>Mobile Number</b> is correct for communication purposes.</li>
+      <li>Once submitted, your slot is confirmed immediately if available.</li>
+      <li>If a slot is blocked by another teacher, the system will show details instantly.</li>
+    </ul>
+
+    <h4>Slot Blocking Policy</h4>
+    <p style="font-size:13px; margin-bottom:6px;">When a period is booked, these periods become unavailable automatically:</p>
+    <ul>
+      <li><b>1st</b> → blocks 1 & 2</li>
+      <li><b>2nd</b> → blocks 1, 2 & 3</li>
+      <li><b>3rd</b> → blocks 2 & 3</li>
+      <li><b>4th</b> → blocks 4 & 5</li>
+      <li><b>5th</b> → blocks 4, 5 & 6</li>
+      <li><b>6th</b> → blocks 5 & 6</li>
+      <li><b>7th</b> → blocks 7 & 8</li>
+      <li><b>8th</b> → blocks 7, 8 & 9</li>
+      <li><b>9th</b> → blocks 8 & 9</li>
+    </ul>
+
+    <h4>Examples</h4>
+    <ul>
+      <li>If <b>Period 2</b> is booked → <b>Periods 1, 2, 3</b> are blocked.</li>
+      <li>If <b>Period 5</b> is booked → <b>Periods 4, 5, 6</b> are blocked.</li>
+      <li>If <b>Period 9</b> is booked → <b>Periods 8 & 9</b> are blocked.</li>
+    </ul>
+
+    <h4>Note</h4>
+    <ul>
+      <li>Blocking rules prevent clashes and ensure smooth scheduling.</li>
+      <li>For issues, contact the system administrator.</li>
+    </ul>
+
+  </div>
+
+</div>
+
+<%- include('partials/footer') %>
+
+<!-- Disable past dates -->
+<script>
+  const today = new Date().toISOString().split("T")[0];
+  document.getElementById("dateField").setAttribute("min", today);
+</script>
+
+</body>
+</html>

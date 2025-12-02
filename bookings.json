@@ -1,0 +1,24 @@
+[
+  {
+    "id": "19ff458a-ee12-4ebb-809c-bbc6fa78c2eb",
+    "date": "2025-12-01",
+    "teacher": "sagar",
+    "period": 1,
+    "time": "08:20 - 09:00",
+    "subject": "ffd",
+    "className": "ff",
+    "mobile": "t",
+    "createdAt": "2025-12-01T04:00:22.051Z"
+  },
+  {
+    "id": "c8dda1d3-909c-40fc-be37-6a417e122007",
+    "date": "2025-12-11",
+    "teacher": "sagar",
+    "period": 6,
+    "time": "11:50 - 12:30",
+    "subject": "ffd",
+    "className": "ff",
+    "mobile": "t",
+    "createdAt": "2025-12-01T04:05:52.934Z"
+  }
+]

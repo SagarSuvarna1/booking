@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Authenticate</title>
+  <style>
+    body { background: #f3f6fa; margin:0; font-family: Arial; }
+    .box {
+      max-width:350px; margin:100px auto; padding:25px;
+      background:white; border-radius:10px;
+      box-shadow:0 3px 15px rgba(0,0,0,0.1);
+    }
+    h3 { text-align:center; margin-bottom:20px; }
+    input {
+      width:100%; padding:10px; border:1px solid #ccc;
+      border-radius:6px; margin-bottom:15px;
+    }
+    button {
+      width:100%; padding:10px; background:#1d75d8;
+      border:none; color:white; border-radius:6px;
+    }
+    .error { background:#ffe6e6; padding:10px; border-radius:6px;
+      color:#a30000; margin-bottom:15px; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h3>Admin PIN Required</h3>
+
+  <% if (message) { %>
+    <div class="error"><%= message %></div>
+  <% } %>
+
+  <form method="post" action="/report-auth">
+    <input type="password" name="pin" placeholder="Enter PIN" required>
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+</body>
+</html>

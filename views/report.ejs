@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Date-wise Report</title>
+  <style>
+    body { background:#f3f6fa; font-family:Arial; margin:0; padding:0; }
+    .container {
+      max-width:900px; margin:20px auto; background:white;
+      padding:20px; border-radius:10px;
+      box-shadow:0 3px 10px rgba(0,0,0,0.1);
+    }
+    h3 { text-align:center; margin-bottom:20px; }
+    .filters { text-align:center; margin-bottom:20px; }
+    .filters input, .filters select {
+      padding:8px; margin:5px; border:1px solid #ccc;
+      border-radius:6px;
+    }
+    button {
+      padding:8px 15px; background:#1d75d8; color:white;
+      border:none; border-radius:6px; cursor:pointer;
+    }
+    table {
+      width:100%; border-collapse:collapse; margin-top:15px;
+    }
+    th, td {
+      border:1px solid #eee; padding:10px; text-align:center;
+    }
+    th { background:#e8f1ff; }
+  </style>
+</head>
+<body>
+
+<%- include('partials/header') %>
+
+<div class="container">
+
+  <h3>Booking Report</h3>
+
+  <!-- FILTER SECTION -->
+  <div class="filters">
+
+    <!-- Date -->
+    <form method="get" action="/report" style="display:inline-block;">
+      <input type="date" name="date" value="<%= date %>">
+      <button type="submit">Date</button>
+    </form>
+
+    <!-- Day -->
+    <form method="get" action="/report" style="display:inline-block;">
+      <select name="day">
+        <option value="">Select Day</option>
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+        <option>Saturday</option>
+        <option>Sunday</option>
+      </select>
+      <button type="submit">Day</button>
+    </form>
+
+    <!-- Range -->
+    <form method="get" action="/report" style="display:inline-block;">
+      <input type="date" name="from" value="<%= from %>">
+      <input type="date" name="to" value="<%= to %>">
+      <button type="submit">Range</button>
+    </form>
+
+  </div>
+
+  <!-- Report Table -->
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Teacher</th>
+      <th>Class</th>
+      <th>Mobile</th>
+      <th>Period</th>
+      <th>Time</th>
+      <th>Subject</th>
+    </tr>
+
+    <% if (list.length === 0) { %>
+      <tr><td colspan="7">No Records Found</td></tr>
+    <% } %>
+
+    <% list.forEach(b => { %>
+      <tr>
+        <td><%= b.date %></td>
+        <td><%= b.teacher %></td>
+        <td><%= b.className %></td>
+        <td><%= b.mobile %></td>
+        <td><%= b.period %></td>
+        <td><%= b.time %></td>
+        <td><%= b.subject %></td>
+      </tr>
+    <% }) %>
+
+  </table>
+</div>
+
+<%- include('partials/footer') %>
+
+</body>
+</html>
