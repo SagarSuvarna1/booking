@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // ----------------------------
 // SQLITE DATABASE
 // ----------------------------
-const db = new sqlite3.Database('booking.db');
+const db = new sqlite3.Database('/data/booking.db');
 
 // Create table if not exists
 db.run(`
